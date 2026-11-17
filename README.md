@@ -1,421 +1,221 @@
-## **AIM:**
+# Image Handling and Pixel Transformations Using OpenCV
+
+**NAME:** Varun A
+**REG NO:** 212224240178
+
+## AIM:
 
 Write a Python program using OpenCV that performs the following tasks:
 
-1. Read and Display an Image.
-2. Adjust the brightness of an image.
+1. Read and display a scenery image.
+2. Adjust the brightness of the image.
 3. Modify the image contrast.
 4. Generate a third image using bitwise operations.
+5. Split the image into Blue, Green, and Red components and display the individual channels.
 
-## **Software Required:**
+## SOFTWARE REQUIRED:
 
-- Anaconda - Python 3.7
+- Anaconda – Python 3.7
 - Jupyter Notebook (for interactive development and execution)
+- OpenCV
+- NumPy
+- Matplotlib
 
-## **Algorithm:**
+## ALGORITHM:
 
-### **Step 1:**
+**Step 1:** Import the required libraries, including OpenCV, NumPy, and Matplotlib.
 
-Load an image from your local directory and display it.
+**Step 2:** Read a scenery image from the local directory using OpenCV's `imread()` function.
 
-### **Step 2:**
+**Step 3:** Convert the image from BGR to RGB format and display the original image using Matplotlib.
 
-Create a matrix of ones (with data type float64) to adjust brightness.
+**Step 4:** Create a matrix of ones with the data type `float64` to adjust the brightness of the image.
 
-### **Step 3:**
+**Step 5:** Generate brighter and darker images by adding and subtracting a constant value from the original image.
 
-Create brighter and darker images by adding and subtracting the matrix from the original image.  
-Display the original, brighter, and darker images.
+**Step 6:** Modify the image contrast using scaling factors of 1.1 and 1.2.
 
-### **Step 4:**
+**Step 7:** Generate a binary mask and perform a bitwise AND operation between the original image and the mask to produce a third image.
 
-Modify the image contrast by creating two higher contrast images using scaling factors of 1.1 and 1.2.  
-Display the original, lower contrast, and higher contrast images.
+**Step 8:** Split the original image into Blue, Green, and Red channels using OpenCV's `split()` function.
 
-### **Step 5:**
+**Step 9:** Display the individual color channels using Matplotlib.
 
-Split the image into B, G, R components and display the channels.
+**Step 10:** Display all the resulting images and observe the changes in brightness, contrast, bitwise operations, and color channels.
 
-## **Program Developed By:**
+## PROGRAM DEVELOPED BY:
 
-- **Name:** [Your Name Here]
-- **Register Number:** [Your Register Number Here]
+**NAME:** Varun A  
+**REG NO:** 212224240178
 
-### **Ex. No. 01**
+## PROGRAM:
 
-#### **1. Read the image ('images.jpg') using OpenCV imread() as a grayscale image.**
+### 1. Import the required libraries.
 
 ```python
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
-img = cv2.imread('images.jpg', cv2.IMREAD_GRAYSCALE)
 ```
 
-#### **2. Print the image width, height & Channel.**
+### 2. Read and display the scenery image.
 
 ```python
-height, width = img.shape
+img = cv2.imread("scenery.jpg")
 
-print("Width:", width)
-print("Height:", height)
-print("Channel:", 1)
-```
-
-#### **3. Display the image using matplotlib imshow().**
-
-```python
-plt.imshow(img, cmap='gray')
-plt.title("Grayscale Image")
-plt.axis('off')
-plt.show()
-```
-
-#### **4. Save the image as a PNG file using OpenCV imwrite().**
-
-```python
-cv2.imwrite('Mountain_Grayscale.png', img)
-```
-
-#### **5. Read the saved image above as a color image using cv2.cvtColor().**
-
-```python
-img_color = cv2.imread('Mountain_Grayscale.png')
-img_color = cv2.cvtColor(img_color, cv2.COLOR_BGR2RGB)
-```
-
-#### **6. Display the Colour image using matplotlib imshow() & Print the image width, height & channel.**
-
-```python
-height, width, channel = img_color.shape
-
-print("Width:", width)
-print("Height:", height)
-print("Channel:", channel)
-
-plt.imshow(img_color)
-plt.title("Color Image")
-plt.axis('off')
-plt.show()
-```
-
-#### **7. Crop the image to extract a specific object (Mountain and lake reflection) from the image.**
-
-```python
-cropped_img = img_color[20:310, 70:550]
-
-plt.imshow(cropped_img)
-plt.title("Cropped Mountain and Lake")
-plt.axis('off')
-plt.show()
-```
-
-#### **8. Resize the image up by a factor of 2x.**
-
-```python
-resized_img = cv2.resize(
-    cropped_img, None, fx=2, fy=2,
-    interpolation=cv2.INTER_CUBIC
-)
-
-plt.imshow(resized_img)
-plt.title("Resized Image")
-plt.axis('off')
-plt.show()
-```
-
-#### **9. Flip the cropped/resized image horizontally.**
-
-```python
-flipped_img = cv2.flip(resized_img, 1)
-
-plt.imshow(flipped_img)
-plt.title("Horizontally Flipped Image")
-plt.axis('off')
-plt.show()
-```
-
-#### **10. Read in the image ('images.jpg').**
-
-```python
-img_original = cv2.imread('images.jpg')
-```
-
-#### **11. Add text to the dark area at the bottom of the image (centered on the image).**
-
-```python
-text = 'Mountain and Lake Reflection'
-font_face = cv2.FONT_HERSHEY_PLAIN
-
-font_scale = 2
-thickness = 2
-
-text_size = cv2.getTextSize(
-    text, font_face, font_scale, thickness
-)[0]
-
-text_x = (img_original.shape[1] - text_size[0]) // 2
-text_y = img_original.shape[0] - 20
-
-cv2.putText(
-    img_original, text, (text_x, text_y),
-    font_face, font_scale, (255, 255, 255),
-    thickness
-)
-```
-
-#### **12. Draw a magenta rectangle that encompasses the mountain and lake reflection.**
-
-```python
-rect_color = (255, 0, 255)
-
-cv2.rectangle(
-    img_original, (70, 20), (550, 310),
-    rect_color, 3
-)
-```
-
-#### **13. Display the final annotated image.**
-
-```python
-img_rgb = cv2.cvtColor(img_original, cv2.COLOR_BGR2RGB)
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 plt.imshow(img_rgb)
-plt.title("Annotated Mountain Image")
-plt.axis('off')
+plt.title("Original Scenery Image")
+plt.axis("off")
 plt.show()
 ```
 
-#### **14. Read the image ('images.jpg').**
+### 3. Adjust the brightness of the image.
 
 ```python
-img = cv2.imread('images.jpg')
+matrix = np.ones(img.shape, dtype="float64") * 50
 ```
 
-#### **15. Adjust the brightness of the image.**
+### 4. Create brighter and darker images.
 
 ```python
-# Create a matrix of ones (with data type float64)
-matrix_ones = np.ones(img.shape, dtype=np.float64) * 50
+img_brighter = cv2.add(img, matrix, dtype=cv2.CV_8U)
+img_darker = cv2.subtract(img, matrix, dtype=cv2.CV_8U)
 ```
 
-#### **16. Create brighter and darker images.**
+### 5. Display the original, brighter, and darker images.
 
 ```python
-img_brighter = cv2.add(img, matrix_ones, dtype=cv2.CV_8U)
-img_darker = cv2.subtract(img, matrix_ones, dtype=cv2.CV_8U)
-```
+plt.figure(figsize=(15,5))
 
-#### **17. Display the images (Original Image, Darker Image, Brighter Image).**
-
-```python
-plt.figure(figsize=(15, 5))
-
-plt.subplot(1, 3, 1)
+plt.subplot(1,3,1)
 plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 plt.title("Original Image")
-plt.axis('off')
+plt.axis("off")
 
-plt.subplot(1, 3, 2)
-plt.imshow(cv2.cvtColor(img_darker, cv2.COLOR_BGR2RGB))
-plt.title("Darker Image")
-plt.axis('off')
-
-plt.subplot(1, 3, 3)
+plt.subplot(1,3,2)
 plt.imshow(cv2.cvtColor(img_brighter, cv2.COLOR_BGR2RGB))
 plt.title("Brighter Image")
-plt.axis('off')
+plt.axis("off")
+
+plt.subplot(1,3,3)
+plt.imshow(cv2.cvtColor(img_darker, cv2.COLOR_BGR2RGB))
+plt.title("Darker Image")
+plt.axis("off")
 
 plt.show()
 ```
 
-#### **18. Modify the image contrast.**
+### 6. Modify the image contrast.
 
 ```python
-# Create two higher contrast images using scaling factors
-matrix1 = np.ones(img.shape, dtype=np.float64) * 1.1
-matrix2 = np.ones(img.shape, dtype=np.float64) * 1.2
-
-# Higher contrast images
-img_higher1 = cv2.multiply(img, matrix1, dtype=cv2.CV_8U)
-img_higher2 = cv2.multiply(img, matrix2, dtype=cv2.CV_8U)
-
-# Lower contrast image
-matrix3 = np.ones(img.shape, dtype=np.float64) * 0.8
-img_lower = cv2.multiply(img, matrix3, dtype=cv2.CV_8U)
+img_higher1 = cv2.convertScaleAbs(img, alpha=1.1, beta=0)
+img_higher2 = cv2.convertScaleAbs(img, alpha=1.2, beta=0)
 ```
 
-#### **19. Display the images (Original, Lower Contrast, Higher Contrast).**
+### 7. Display the original and contrast-adjusted images.
 
 ```python
-plt.figure(figsize=(15, 5))
+plt.figure(figsize=(15,5))
 
-plt.subplot(1, 4, 1)
+plt.subplot(1,3,1)
 plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 plt.title("Original Image")
-plt.axis('off')
+plt.axis("off")
 
-plt.subplot(1, 4, 2)
-plt.imshow(cv2.cvtColor(img_lower, cv2.COLOR_BGR2RGB))
-plt.title("Lower Contrast")
-plt.axis('off')
-
-plt.subplot(1, 4, 3)
+plt.subplot(1,3,2)
 plt.imshow(cv2.cvtColor(img_higher1, cv2.COLOR_BGR2RGB))
-plt.title("Higher Contrast 1.1")
-plt.axis('off')
+plt.title("Contrast 1.1")
+plt.axis("off")
 
-plt.subplot(1, 4, 4)
+plt.subplot(1,3,3)
 plt.imshow(cv2.cvtColor(img_higher2, cv2.COLOR_BGR2RGB))
-plt.title("Higher Contrast 1.2")
-plt.axis('off')
+plt.title("Contrast 1.2")
+plt.axis("off")
 
 plt.show()
 ```
 
-#### **20. Split the image into the B, G, R components & Display the channels.**
+### 8. Generate a third image using bitwise operations.
+
+```python
+mask = np.zeros(img.shape[:2], dtype="uint8")
+
+cv2.rectangle(mask, (100, 100), (400, 400), 255, -1)
+
+bitwise_image = cv2.bitwise_and(img, img, mask=mask)
+```
+
+### 9. Display the original image, mask, and bitwise image.
+
+```python
+plt.figure(figsize=(15,5))
+
+plt.subplot(1,3,1)
+plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1,3,2)
+plt.imshow(mask, cmap="gray")
+plt.title("Binary Mask")
+plt.axis("off")
+
+plt.subplot(1,3,3)
+plt.imshow(cv2.cvtColor(bitwise_image, cv2.COLOR_BGR2RGB))
+plt.title("Bitwise AND Image")
+plt.axis("off")
+
+plt.show()
+```
+
+### 10. Split the image into B, G, R components.
 
 ```python
 B, G, R = cv2.split(img)
 
-plt.figure(figsize=(15, 5))
+plt.figure(figsize=(12,4))
 
-plt.subplot(1, 3, 1)
-plt.imshow(B, cmap='gray')
+plt.subplot(1,3,1)
+plt.imshow(B, cmap="gray")
 plt.title("Blue Channel")
-plt.axis('off')
+plt.axis("off")
 
-plt.subplot(1, 3, 2)
-plt.imshow(G, cmap='gray')
+plt.subplot(1,3,2)
+plt.imshow(G, cmap="gray")
 plt.title("Green Channel")
-plt.axis('off')
+plt.axis("off")
 
-plt.subplot(1, 3, 3)
-plt.imshow(R, cmap='gray')
+plt.subplot(1,3,3)
+plt.imshow(R, cmap="gray")
 plt.title("Red Channel")
-plt.axis('off')
+plt.axis("off")
 
 plt.show()
 ```
 
-#### **21. Merge the R, G, B channels and display along with the original image.**
+## OUTPUT:
 
-```python
-merged_img = cv2.merge([B, G, R])
+The following outputs are obtained:
 
-plt.figure(figsize=(10, 5))
+1. Original Scenery Image
+2. Brighter Image
+3. Darker Image
+4. Contrast 1.1 Image
+5. Contrast 1.2 Image
+6. Binary Mask
+7. Bitwise AND Image
+8. Blue Channel
+9. Green Channel
+10. Red Channel
 
-plt.subplot(1, 2, 1)
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-plt.title("Original Image")
-plt.axis('off')
+<img width="1513" height="817" alt="image" src="https://github.com/user-attachments/assets/3920e189-a247-4fa2-b258-c3ce301877e8" />
 
-plt.subplot(1, 2, 2)
-plt.imshow(cv2.cvtColor(merged_img, cv2.COLOR_BGR2RGB))
-plt.title("Merged Image")
-plt.axis('off')
+<img width="1362" height="462" alt="image" src="https://github.com/user-attachments/assets/807826e1-1f28-4587-8293-0da5a7dfd362" />
 
-plt.show()
-```
 
-#### **22. Split the image into the H, S, V components & Display the channels.**
 
-```python
-hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+## RESULT:
 
-H, S, V = cv2.split(hsv_img)
-
-plt.figure(figsize=(15, 5))
-
-plt.subplot(1, 3, 1)
-plt.imshow(H, cmap='gray')
-plt.title("Hue")
-plt.axis('off')
-
-plt.subplot(1, 3, 2)
-plt.imshow(S, cmap='gray')
-plt.title("Saturation")
-plt.axis('off')
-
-plt.subplot(1, 3, 3)
-plt.imshow(V, cmap='gray')
-plt.title("Value")
-plt.axis('off')
-
-plt.show()
-```
-
-#### **23. Merge the H, S, V channels and display along with the original image.**
-
-```python
-merged_hsv = cv2.merge([H, S, V])
-
-merged_image = cv2.cvtColor(
-    merged_hsv, cv2.COLOR_HSV2BGR
-)
-
-plt.figure(figsize=(10, 5))
-
-plt.subplot(1, 2, 1)
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-plt.title("Original Image")
-plt.axis('off')
-
-plt.subplot(1, 2, 2)
-plt.imshow(cv2.cvtColor(merged_image, cv2.COLOR_BGR2RGB))
-plt.title("Merged HSV Image")
-plt.axis('off')
-
-plt.show()
-```
-
-#### **Bitwise Operation – Generate a Third Image.**
-
-```python
-# Create a mask
-mask = np.zeros(img.shape[:2], dtype=np.uint8)
-
-height, width = mask.shape
-
-cv2.rectangle(
-    mask,
-    (width // 4, height // 4),
-    (3 * width // 4, 3 * height // 4),
-    255,
-    -1
-)
-
-# Perform bitwise AND operation
-bitwise_img = cv2.bitwise_and(img, img, mask=mask)
-
-plt.figure(figsize=(15, 5))
-
-plt.subplot(1, 3, 1)
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-plt.title("Original Image")
-plt.axis('off')
-
-plt.subplot(1, 3, 2)
-plt.imshow(mask, cmap='gray')
-plt.title("Mask")
-plt.axis('off')
-
-plt.subplot(1, 3, 3)
-plt.imshow(cv2.cvtColor(bitwise_img, cv2.COLOR_BGR2RGB))
-plt.title("Bitwise AND Image")
-plt.axis('off')
-
-plt.show()
-```
-
-## **Output:**
-
-- **i)** Read and Display an Image.
-- **ii)** Adjust Image Brightness.
-- **iii)** Modify Image Contrast.
-- **iv)** Generate Third Image Using Bitwise Operations.
-
-## **Result:**
-
-Thus, the image was read and displayed, brightness and contrast adjustments were performed, and bitwise operations were successfully applied using the Python program.
+Thus, the scenery image was successfully read and displayed using OpenCV. Brightness and contrast adjustments were performed, a third image was generated using bitwise operations, and the individual Blue, Green, and Red channels were extracted and displayed successfully.
